@@ -1,8 +1,8 @@
 #playing-area {
     border-radius: 30px;
     border: 10px solid navy;
-    height: 100vh;
-    width: 100vh;
+    height: 90vh;
+    width: 90vh;
     margin: 0 auto;
     padding: 10px;
 }
@@ -10,4 +10,10 @@
 #board {
     height: 100%;
     width: 100%;
+}
+
+.board-square {
+    background-color: black;
+    border: 1px solid green;
+    cursor: pointer;
 }
