@@ -1,13 +1,16 @@
 BOARD = document.getElementById('board');
 
+function selectSquare(element) {
+    element.style.backgroundColor = "orange"
+    console.log(element.id)
+}
+
 function generate_board () {
-    amountOfRowCol = 5
+    amountOfRowCol = 10
     BOARD.style.backgroundColor = "gray";
 
     squareWidth = BOARD.clientWidth / amountOfRowCol
     BOARD.style.height = squareWidth + "px"
-    console.log(squareWidth)
-    console.log(squareWidth*amountOfRowCol)
 
     for (let i = amountOfRowCol; i > 0; i--) {
         const newRow = document.createElement("div")
@@ -21,10 +24,21 @@ function generate_board () {
             newSquare.style.height = (squareWidth)  + "px"
             newSquare.style.width = (squareWidth) + "px"
             newSquare.setAttribute('class', 'board-square')
-            newSquare.setAttribute('id', j + "-" + i )
+            newSquare.setAttribute('id', j.toString() + "," + i.toString())
+            newSquare.setAttribute('onClick', "selectSquare(this)")
             newRow.appendChild(newSquare);
         }
     }
+
+    // squares = document.getElementsByClassName('board-square');
+    // console.log(squares)
+    // for (let square of squares) {
+    //     document.addEventListener('click', function() {
+    //         console.log(square.getAttribute('id'))
+    //         document.getElementById(square.getAttribute('id')).style.backgroundColor = "orange"
+    //     });
+    // }
+
 }
 
 window.onload = function() {
