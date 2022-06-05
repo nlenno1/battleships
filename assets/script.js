@@ -45,7 +45,7 @@ function selectSquare(element) {
             element.style.backgroundColor = "red"
         }
         if (totalShipsSunk == placedShips.length) {
-            alert("CONGRATULATIONS YOU HAVE WON. You had " + misses + "misses. Try again and see if you can get fewer!")
+            alert("CONGRATULATIONS YOU HAVE WON. You had " + misses + " misses. Try again and see if you can get fewer!")
             location.reload()
         }
     }
@@ -159,12 +159,9 @@ function placeShips(boardDimentions, ships) {
     //show ships on display
     let shipIndex = 0
     for (let ship of placedShips) {
-        for (let coord of ship) {
-            document.getElementById(coord).style.backgroundColor = "blue"
-        }
         shipIndex += 1
         var newShipDisplay = document.createElement("li")
-        var shipText = document.createTextNode("Ship " + shipIndex)
+        var shipText = document.createTextNode("Ship " + shipIndex + " (" + ship.length + " blocks long)")
         newShipDisplay.appendChild(shipText)
         newShipDisplay.setAttribute("id", "ship-" + shipIndex)
         document.getElementById("ships-remaining-list").appendChild(newShipDisplay)
