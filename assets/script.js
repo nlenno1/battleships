@@ -3,7 +3,7 @@ var placedShips = []
 var selectedSquares = []
 var misses = 0
 var totalShipsSunk = 0
-var ships = [3, 4, 4, 5, 6];
+var ships = [3, 4, 4, 5];
 
 function selectSquare(element) {
     if (selectedSquares.includes(element.id)) {
@@ -169,8 +169,8 @@ function placeShips(boardDimentions, ships) {
     }
 }
 
-function generate_board () {
-    amountOfRowCol = 10
+function generate_board(amountOfRowCol) {
+    amountOfRowCol = 8
     BOARD.style.backgroundColor = "gray";
 
     squareWidth = BOARD.clientWidth / amountOfRowCol
