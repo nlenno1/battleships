@@ -21,9 +21,7 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="#">New Game</a>
-                    <a class="nav-link" href="#">Difficulty</a>
-                    <a class="nav-link" href="#">Score Board</a>
+                    <a class="nav-link" href="#" onClick="location.reload()">New Game</a>
                 </div>
             </div>
         </div>
@@ -40,7 +38,8 @@
             <div id="scoring-area">
                 <div class="ships-remaining text-center pt-5">
                     <h3>Ships Remaining</h3>
-                    <ul></ul>
+                    <ul id="ships-remaining-list"></ul>
+                    <p>Total Misses <span id="miss-counter"></span></p>
                 </div>
             </div>
         </div>

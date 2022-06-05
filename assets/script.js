@@ -2,6 +2,8 @@ const BOARD = document.getElementById('board');
 var placedShips = []
 var selectedSquares = []
 var misses = 0
+var totalShipsSunk = 0
+var ships = [3, 4, 4, 5, 6];
 
 function selectSquare(element) {
     if (selectedSquares.includes(element.id)) {
@@ -10,30 +12,46 @@ function selectSquare(element) {
         selectedSquares.push(element.id)
 
         let hit = false
+        var counter = 0
         var shipIndex = 0
         for (let ship of placedShips) {
-            shipIndex += 1
+            counter += 1
             for (let coord of ship) {
                 if (element.id == coord) {
                     hit = true
+                    shipIndex = counter
                 }
             }
         }
         if (hit == false) {
             element.style.backgroundColor = "gray"
             misses += 1
+            document.getElementById("miss-counter").innerHTML = misses
         } else {
+            shipSunk = true
             for (let coord of placedShips[shipIndex - 1]) {
-                console.log(coord)
+                if (!selectedSquares.includes(coord)) {
+                    shipSunk = false
+                }
             }
-            alert("HIT")
+
+            if (shipSunk) {
+                alert("HIT and sunk ship " + shipIndex)
+                totalShipsSunk += 1
+                document.getElementById("ship-" + shipIndex).style.color = "red"
+            } else {
+                alert("HIT")
+            }
             element.style.backgroundColor = "red"
+        }
+        if (totalShipsSunk == placedShips.length) {
+            alert("CONGRATULATIONS YOU HAVE WON. You had " + misses + "misses. Try again and see if you can get fewer!")
+            location.reload()
         }
     }
 }
 
-function placeShips(boardDimentions) {
-    var ships = [3,4,5,6];
+function placeShips(boardDimentions, ships) {
     placedShips = []
 
     for (let shipLength of ships) {
@@ -139,10 +157,18 @@ function placeShips(boardDimentions) {
     };
     console.log(placedShips)
     //show ships on display
+    let shipIndex = 0
     for (let ship of placedShips) {
         for (let coord of ship) {
             document.getElementById(coord).style.backgroundColor = "blue"
         }
+        shipIndex += 1
+        var newShipDisplay = document.createElement("li")
+        var shipText = document.createTextNode("Ship " + shipIndex)
+        newShipDisplay.appendChild(shipText)
+        newShipDisplay.setAttribute("id", "ship-" + shipIndex)
+        document.getElementById("ships-remaining-list").appendChild(newShipDisplay)
+        document.getElementById("miss-counter").innerHTML = misses
     }
 }
 
@@ -170,7 +196,7 @@ function generate_board () {
             newRow.appendChild(newSquare);
         }
     }
-    placeShips(amountOfRowCol)
+    placeShips(amountOfRowCol, ships)
 
     // squares = document.getElementsByClassName('board-square');
     // console.log(squares)
