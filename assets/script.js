@@ -5,9 +5,12 @@ var misses = 0
 var totalShipsSunk = 0
 var ships = [3, 4, 4, 5];
 
+const message = document.getElementById("message")
+
 function selectSquare(element) {
+    message.innerHTML = "&nbsp"
     if (selectedSquares.includes(element.id)) {
-        alert("You have already picked that one")
+        message.innerHTML = "You have already picked that one"
     } else {
         selectedSquares.push(element.id)
 
@@ -36,16 +39,16 @@ function selectSquare(element) {
             }
 
             if (shipSunk) {
-                alert("HIT and sunk ship " + shipIndex)
+                message.innerHTML = "HIT and sunk ship " + shipIndex
                 totalShipsSunk += 1
                 document.getElementById("ship-" + shipIndex).style.color = "red"
             } else {
-                alert("HIT")
+                message.innerHTML = "HIT"
             }
             element.style.backgroundColor = "red"
         }
         if (totalShipsSunk == placedShips.length) {
-            alert("CONGRATULATIONS YOU HAVE WON. You had " + misses + " misses. Try again and see if you can get fewer!")
+            message.innerHTML = "CONGRATULATIONS YOU HAVE WON. You had " + misses + " misses. Try again and see if you can get fewer!"
             location.reload()
         }
     }
@@ -173,7 +176,7 @@ function generate_board(amountOfRowCol) {
     amountOfRowCol = 8
     BOARD.style.backgroundColor = "gray";
 
-    squareWidth = BOARD.clientWidth / amountOfRowCol
+    squareWidth = (BOARD.clientWidth - 20) / amountOfRowCol
     BOARD.style.height = squareWidth + "px"
 
     for (let i = amountOfRowCol; i > 0; i--) {

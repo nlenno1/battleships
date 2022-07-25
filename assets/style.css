@@ -10,6 +10,7 @@
 #board {
     height: 100%;
     width: 100%;
+    display: flex;
 }
 
 .board-square {
@@ -20,4 +21,18 @@
 
 #ships-remaining-list {
     list-style: none;
+}
+
+.row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.col-md-4 {
+    width: 24vw;
+}
+
+.col-md-8 {
+    width: 74vw;
 }
