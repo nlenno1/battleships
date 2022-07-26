@@ -5,6 +5,7 @@ var misses = 0
 var totalShipsSunk = 0
 var difficultyOptions = ["Easy", "Medium", "Hard"]
 var ships;
+var amountOfRowCol;
 
 const message = document.getElementById("message")
 
@@ -205,7 +206,6 @@ function placeShips(boardDimentions, ships) {
 }
 
 function generateBoard(amountOfRowCol) {
-    amountOfRowCol = 8
     BOARD.style.backgroundColor = "gray";
 
     squareWidth = (BOARD.clientWidth - 20) / amountOfRowCol
@@ -230,6 +230,8 @@ function generateBoard(amountOfRowCol) {
 }
 
 function showDifficultyOptions() {
+    diffQuestion = document.createTextNode("Choose your difficulty level")
+    BOARD.appendChild(diffQuestion)
     for (let diff in difficultyOptions) {
         const newButton = document.createElement("button")
         newButton.setAttribute('class', 'btn btn-success difficulty-button')
@@ -246,15 +248,18 @@ function selectDifficulty() {
     switch (difficultySelection) {
         case "easy":
             ships = [3, 4, 4, 5, 5];
-            generateBoard();
+            amountOfRowCol = 6
+            generateBoard(amountOfRowCol);
             break;
         case "medium":
             ships = [3, 4, 4, 5];
-            generateBoard();
+            amountOfRowCol = 8
+            generateBoard(amountOfRowCol);
             break;
         case "hard":
             ships = [2, 3, 4];
-            generateBoard();
+            amountOfRowCol = 10
+            generateBoard(amountOfRowCol);
             break;
     }
 }
