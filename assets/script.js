@@ -64,8 +64,7 @@ function selectSquare(element) {
             element.style.backgroundColor = "red"
         }
         if (totalShipsSunk == placedShips.length) {
-            message.innerHTML = "CONGRATULATIONS YOU HAVE WON. You had " + misses + " misses. Try again and see if you can get fewer!"
-            location.reload()
+            gameOver()
         }
     }
 }
@@ -210,12 +209,10 @@ function generateBoard(amountOfRowCol) {
     BOARD.style.backgroundColor = "gray";
 
     squareWidth = (BOARD.clientWidth - 20) / amountOfRowCol
-    BOARD.style.height = squareWidth + "px"
 
     for (let i = amountOfRowCol; i > 0; i--) {
         const newRow = document.createElement("div")
         newRow.setAttribute('class', 'row g-0')
-        newRow.style.height = squareWidth + "px"
         newRow.style.width = "100%"
         BOARD.appendChild(newRow)
 
@@ -260,6 +257,19 @@ function selectDifficulty() {
             generateBoard();
             break;
     }
+}
+
+function gameOver () {
+    BOARD.innerHTML = `
+    <div class="row h-100">
+        <div class="col-12 text-light content-center text-center h-100" style="display: flex; flex-direction: column; justify-content: space-evenly; align-items: center;">
+            <h3 class="display-3">CONGRATULATIONS YOU HAVE WON!</h3>
+            <p class="mb-0">You sank all the enemies battleships. You missed ${misses} times.</p>
+            <p>Try again and see if you can do better next time</p>
+            <button id="play-again-button" class="btn btn-success mt-3" onclick="location.reload()">Play Again?</button>
+        </div>
+    </div>
+    `
 }
 
 window.onload = function() {
