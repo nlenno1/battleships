@@ -3,7 +3,8 @@ var placedShips = []
 var selectedSquares = []
 var misses = 0
 var totalShipsSunk = 0
-var ships = [3, 4, 4, 5];
+var difficultyOptions = ["Easy", "Medium", "Hard"]
+var ships;
 
 const message = document.getElementById("message")
 
@@ -17,6 +18,7 @@ function selectSquare(element) {
         let hit = false
         var counter = 0
         var shipIndex = 0
+        var shipName = ""
         for (let ship of placedShips) {
             counter += 1
             for (let coord of ship) {
@@ -37,9 +39,23 @@ function selectSquare(element) {
                     shipSunk = false
                 }
             }
-
             if (shipSunk) {
-                message.innerHTML = "HIT and sunk ship " + shipIndex
+                var shipSankLength = placedShips[shipIndex - 1].length
+                switch(shipSankLength) {
+                    case 2:
+                        shipName = "Destroyer"
+                        break;
+                    case 3:
+                        shipName = "Submarine"
+                        break;
+                    case 4:
+                        shipName = "Battleship"
+                        break;
+                    case 5:
+                        shipName = "Aircraft Carrier"
+                        break;
+                }
+                message.innerHTML = "HIT and sunk your enemies " + shipName
                 totalShipsSunk += 1
                 document.getElementById("ship-" + shipIndex).style.color = "red"
             } else {
@@ -63,7 +79,7 @@ function placeShips(boardDimentions, ships) {
         while (directionChoices.length == 0) {
             var coordX = (Math.floor(Math.random() * boardDimentions)) + 1;
             var coordY = (Math.floor(Math.random() * boardDimentions)) + 1;
-    
+            // create single list of all the coords used
             let usedCoords = [];
             for (let ship of placedShips) {
                 for (let coord of ship) {
@@ -162,9 +178,26 @@ function placeShips(boardDimentions, ships) {
     //show ships on display
     let shipIndex = 0
     for (let ship of placedShips) {
-        shipIndex += 1
         var newShipDisplay = document.createElement("li")
-        var shipText = document.createTextNode("Ship " + shipIndex + " (" + ship.length + " blocks long)")
+        let shipName
+        console.log(ship.length)
+        var shipLength = ship.length
+        switch(shipLength) {
+            case 2:
+                shipName = "Destroyer"
+                break;
+            case 3:
+                shipName = "Submarine"
+                break;
+            case 4:
+                shipName = "Battleship"
+                break;
+            case 5:
+                shipName = "Aircraft Carrier"
+                break;
+        }
+        shipIndex += 1
+        var shipText = document.createTextNode(shipName + " (" + ship.length + " blocks long)")
         newShipDisplay.appendChild(shipText)
         newShipDisplay.setAttribute("id", "ship-" + shipIndex)
         document.getElementById("ships-remaining-list").appendChild(newShipDisplay)
@@ -172,7 +205,7 @@ function placeShips(boardDimentions, ships) {
     }
 }
 
-function generate_board(amountOfRowCol) {
+function generateBoard(amountOfRowCol) {
     amountOfRowCol = 8
     BOARD.style.backgroundColor = "gray";
 
@@ -197,18 +230,38 @@ function generate_board(amountOfRowCol) {
         }
     }
     placeShips(amountOfRowCol, ships)
+}
 
-    // squares = document.getElementsByClassName('board-square');
-    // console.log(squares)
-    // for (let square of squares) {
-    //     document.addEventListener('click', function() {
-    //         console.log(square.getAttribute('id'))
-    //         document.getElementById(square.getAttribute('id')).style.backgroundColor = "orange"
-    //     });
-    // }
+function showDifficultyOptions() {
+    for (let diff in difficultyOptions) {
+        const newButton = document.createElement("button")
+        newButton.setAttribute('class', 'btn btn-success difficulty-button')
+        newButton.textContent = difficultyOptions[diff];
+        newButton.setAttribute('id', difficultyOptions[diff].toLowerCase())
+        newButton.addEventListener("click", selectDifficulty, true)
+        BOARD.appendChild(newButton)
+    }
+}
 
+function selectDifficulty() {
+    BOARD.innerHTML = ""
+    difficultySelection = this.id
+    switch (difficultySelection) {
+        case "easy":
+            ships = [3, 4, 4, 5, 5];
+            generateBoard();
+            break;
+        case "medium":
+            ships = [3, 4, 4, 5];
+            generateBoard();
+            break;
+        case "hard":
+            ships = [2, 3, 4];
+            generateBoard();
+            break;
+    }
 }
 
 window.onload = function() {
-    generate_board()
+    showDifficultyOptions()
 }
